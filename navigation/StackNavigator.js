@@ -5,6 +5,7 @@ import HomeMap from "../screens/HomeMap";
 import ParkingInfo from "../screens/ParkingInfo";
 import InfoApp from "../screens/InfoApp";
 import Contact from "../screens/Contact";
+import AppMap from "../components/MapView";
 
 const Stack = createStackNavigator();
 
@@ -19,11 +20,11 @@ const screenOptionStyle = {
 const MainStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
-      <Stack.Screen name="HomeMap" component={HomeMap} />
+      <Stack.Screen name="HomeMap" component={AppMap} />
       <Stack.Screen name="ParkingInfo" component={ParkingInfo} />
     </Stack.Navigator>
   );
-}
+};
 
 const ContactStackNavigator = () => {
   return (
@@ -31,7 +32,7 @@ const ContactStackNavigator = () => {
       <Stack.Screen name="Contact" component={Contact} />
     </Stack.Navigator>
   );
-}
+};
 
 const InfoStackNavigator = () => {
   return (
@@ -39,6 +40,6 @@ const InfoStackNavigator = () => {
       <Stack.Screen name="InfoApp" component={InfoApp} />
     </Stack.Navigator>
   );
-}
+};
 
 export { MainStackNavigator, ContactStackNavigator, InfoStackNavigator };

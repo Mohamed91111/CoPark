@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text} from 'react-native';
 
-const InfoView = props => {
+const InfoView = (props) => {
     return (
         <View style={styles.infoView}>
            <Text> Create Parking Info</Text>
