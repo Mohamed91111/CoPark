@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { ActivityIndicator, Text } from "react-native";
 import MapView, { PROVIDER_DEFAULT } from "react-native-maps";
 
@@ -35,12 +35,12 @@ function AppMap  ({ navigation })  {
   const [curentPosition, setCurentPosition] = useState(initialState);
   const [loadedParkings, setLoadedParkings] = useState([]);
 
-  useEffect(() => {
+   useState(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         //alert(JSON.stringify(position))
         const { longitude, latitude } = position.coords;
-        setCurentPosition({
+         setCurentPosition({
           ...curentPosition,
           latitude,
           longitude,
@@ -52,7 +52,7 @@ function AppMap  ({ navigation })  {
         console.log(lat)
         console.log(lon)
 
-        fetch("http://data.goteborg.se/ParkingService/v2.1/PrivateTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=600&format=json")
+        fetch("http://data.goteborg.se/ParkingService/v2.1/PublicTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=600&format=json")
         .then((response) => {
           return response.json();
         })
@@ -69,13 +69,11 @@ function AppMap  ({ navigation })  {
           }
           setLoadedParkings([...parkings,setLoadedParkings])
         });
-      }, []);
+      },[]);
       },
       (error) => alert(error.message),
       { timeout: 2000, maximumAge: 1000 }
     )
-
-   
 
   return curentPosition.latitude ? (
     <MapView
