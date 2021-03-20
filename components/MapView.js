@@ -45,29 +45,37 @@ function AppMap  ({ navigation })  {
           latitude,
           longitude,
         });
+
+        const lat = position.coords.latitude.toString()
+        const lon = position.coords.longitude.toString()
+
+        console.log(lat)
+        console.log(lon)
+
+        fetch("http://data.goteborg.se/ParkingService/v2.1/PrivateTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=600&format=json")
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          const parkings = [];
+    
+          for (const key in data) {
+            const parking = {
+              id:key,
+              ...data[key]
+            };
+    
+            parkings.push(parking);
+          }
+          setLoadedParkings([...parkings,setLoadedParkings])
+        });
+      }, []);
       },
       (error) => alert(error.message),
-      { timeout: 4000, maximumAge: 3000 }
+      { timeout: 2000, maximumAge: 1000 }
     )
 
-    fetch("http://data.goteborg.se/ParkingService/v2.1/PublicTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+curentPosition.latitude+"&longitude="+curentPosition.longitude+"&radius=500&format=json")
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      const parkings = [];
-
-      for (const key in data) {
-        const parking = {
-          id:key,
-          ...data[key]
-        };
-
-        parkings.push(parking);
-      }
-      setLoadedParkings([...parkings,setLoadedParkings])
-    });
-  }, []);
+   
 
   return curentPosition.latitude ? (
     <MapView
