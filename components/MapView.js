@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { ActivityIndicator, Text } from "react-native";
 import MapView, { PROVIDER_DEFAULT } from "react-native-maps";
 
@@ -10,32 +10,11 @@ const initialState = {
 };
 
 function AppMap  ({ navigation })  {
-  state = {
-    parkings: [
-      {
-        Id: "",
-        Name: "",
-        Owner: "",
-        ParkingSpaces: 0,
-        PhoneParkingCode: "",
-        ParkingCost: "",
-        ParkingCharge: "",
-        CurrentParkingCost: 0,
-        MaxParkingTime: "",
-        MaxParkingTimeLimitation:
-          "",
-        ExtraInfo: "",
-        Distance: 0,
-        Lat: 0,
-        Long: 0,
-        WKT: "",
-      }
-    ],
-  };
+
   const [curentPosition, setCurentPosition] = useState(initialState);
   const [loadedParkings, setLoadedParkings] = useState([]);
 
-   useState(() => {
+   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         //alert(JSON.stringify(position))
@@ -52,27 +31,16 @@ function AppMap  ({ navigation })  {
         console.log(lat)
         console.log(lon)
 
-        fetch("http://data.goteborg.se/ParkingService/v2.1/PublicTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=600&format=json")
+        fetch("http://data.goteborg.se/ParkingService/v2.1/PublicTimeParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=600&format=json")
         .then((response) => {
-          return response.json();
+          return response.json()
         })
         .then((data) => {
-          const parkings = [];
     
-          for (const key in data) {
-            const parking = {
-              id:key,
-              ...data[key]
-            };
-    
-            parkings.push(parking);
-          }
-          setLoadedParkings([...parkings,setLoadedParkings])
+          setLoadedParkings([...data])
         });
-      },[]);
-      },
-      (error) => alert(error.message),
-      { timeout: 2000, maximumAge: 1000 }
+      });
+      },[]
     )
 
   return curentPosition.latitude ? (
