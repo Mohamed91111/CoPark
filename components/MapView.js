@@ -8,7 +8,7 @@ const initialState = {
   latitudeDelta: 0.005,
   longitudeDelta: 0.005,
 };
-
+const parkings = []
 function AppMap  ({ navigation })  {
 
   const [curentPosition, setCurentPosition] = useState(initialState);
@@ -28,16 +28,36 @@ function AppMap  ({ navigation })  {
         const lat = position.coords.latitude.toString()
         const lon = position.coords.longitude.toString()
 
-        console.log(lat)
-        console.log(lon)
-
+        console.log("My latitude is ",lat)
+        console.log("My longitude is ",lon)
+        
         fetch("http://data.goteborg.se/ParkingService/v2.1/PublicTimeParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=600&format=json")
         .then((response) => {
           return response.json()
         })
-        .then((data) => {
-    
-          setLoadedParkings([...data])
+        .then((data1) => {
+          parkings.push(...data1)
+          console.log(parkings);
+         // setLoadedParkings([...data1])
+        });
+        fetch("http://data.goteborg.se/ParkingService/v2.1/PublicTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=600&format=json")
+        .then((response) => {
+          return response.json()
+        })
+        .then((data2) => {
+          parkings.push(...data2)
+          console.log(parkings);
+          //setLoadedParkings([...data2])
+        });
+        fetch("http://data.goteborg.se/ParkingService/v2.1/PrivateTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=600&format=json")
+        .then((response) => {
+          return response.json()
+        })
+        .then((data3) => {
+          parkings.push(...data3)
+          console.log(parkings);
+          setLoadedParkings([...parkings])
+          
         });
       });
       },[]
@@ -73,3 +93,10 @@ function AppMap  ({ navigation })  {
 };
 
 export default AppMap;
+/*
+Promise.all([
+  fetch("http://data.goteborg.se/ParkingService/v2.1/PublicTimeParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=600&format=json"),
+  fetch("http://data.goteborg.se/ParkingService/v2.1/PublicTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=600&format=json"),
+  fetch("http://data.goteborg.se/ParkingService/v2.1/PrivateTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=600&format=json")
+  ])
+  */
