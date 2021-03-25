@@ -5,8 +5,8 @@ import MapView, { PROVIDER_DEFAULT } from "react-native-maps";
 const initialState = {
   latitude: null,
   longitude: null,
-  latitudeDelta: 0.005,
-  longitudeDelta: 0.005,
+  latitudeDelta: 0.006,
+  longitudeDelta: 0.006,
 };
 const parkings = []
 function AppMap  ({ navigation })  {
@@ -31,7 +31,7 @@ function AppMap  ({ navigation })  {
         console.log(lat)
         console.log(lon)
 
-        fetch("http://data.goteborg.se/ParkingService/v2.1/PublicTimeParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=7600&format=json")
+          fetch("http://data.goteborg.se/ParkingService/v2.1/PublicTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=11600&format=json")
         .then((response) => {
           return response.json()
         })
@@ -39,21 +39,12 @@ function AppMap  ({ navigation })  {
           parkings.push(...data1)
         })
         .then(() => {
-          fetch("http://data.goteborg.se/ParkingService/v2.1/PublicTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=7600&format=json")
+          fetch("http://data.goteborg.se/ParkingService/v2.1/PrivateTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=11600&format=json")
         .then((response) => {
           return response.json()
         })
         .then((data2) => {
           parkings.push(...data2)
-        });
-        })
-        .then(() => {
-          fetch("http://data.goteborg.se/ParkingService/v2.1/PrivateTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=7600&format=json")
-        .then((response) => {
-          return response.json()
-        })
-        .then((data3) => {
-          parkings.push(...data3)
  
           setLoadedParkings([...parkings])     
         });
