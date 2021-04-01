@@ -4,7 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import HomeMap from "../screens/HomeMap";
 import ParkingInfo from "../screens/ParkingInfo";
 import InfoApp from "../screens/InfoApp";
-import Contact from "../screens/Contact";
+import Options from "../screens/Options";
 import AppMap from "../components/MapView";
 
 const Stack = createStackNavigator();
@@ -26,10 +26,10 @@ const MainStackNavigator = () => {
   );
 };
 
-const ContactStackNavigator = () => {
+const OptionsStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
-      <Stack.Screen name="Contact" component={Contact} />
+      <Stack.Screen name="Options" component={Options} />
     </Stack.Navigator>
   );
 };
@@ -42,4 +42,4 @@ const InfoStackNavigator = () => {
   );
 };
 
-export { MainStackNavigator, ContactStackNavigator, InfoStackNavigator };
+export { MainStackNavigator, OptionsStackNavigator, InfoStackNavigator };

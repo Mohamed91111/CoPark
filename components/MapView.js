@@ -62,13 +62,15 @@ function AppMap  ({ navigation })  {
       showsScale={true}
     >
       {loadedParkings.map((parking) => {
+
+        console.log(parking)
         return (
           <MapView.Marker
             coordinate={{ latitude: parking.Lat, longitude: parking.Long }}
             key={parking.Id}
             pinColor={"purple"} // any color
           >
-            <MapView.Callout onPress={() => navigation.navigate("ParkingInfo")}>
+            <MapView.Callout onPress={() => navigation.navigate("ParkingInfo",parking)}>
                 <Text style={{"fontWeight": "bold"}}>{parking.Name + " Nu: " + parking.CurrentParkingCost + "kr/tim"}</Text>
                 <Text>{"Tptal Antal Platser: " + parking.ParkingSpaces}</Text>
                 <Text>{"Max tim: " + parking.MaxParkingTime}</Text> 
