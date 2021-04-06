@@ -1,29 +1,38 @@
 import React from "react";
-import { View, StyleSheet, Text, TouchableOpacity,  } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity, ScrollView } from "react-native";
 import { FontAwesome } from '@expo/vector-icons';
+import { OpenMapDirections } from 'react-native-navigation-directions';
 
 const ParkingInfo = ({route,navigation}) => {
- const {PhoneParkingCode, Name, CurrentParkingCost, Distance, ParkingSpaces, Owner, ParkingCost, ExtraInfo, MaxParkingTimeLimitation, MaxParkingTime} = route.params;
+ const {PhoneParkingCode, Name, CurrentParkingCost, Distance, ParkingSpaces, Owner, ParkingCost, ExtraInfo, MaxParkingTimeLimitation, MaxParkingTime, Lat, Long} = route.params;
 
  const navigationTo = ()=>{
-   console.log('ok')
+
+  const startPoint = null;
+
+  const endPoint = {latitude: Lat, longitude: Long}
+
+  const transportPlan = 'd';
+
+  OpenMapDirections(startPoint, endPoint, transportPlan);
  }
  
   return (
     <View style={styles.center}>
-     
-      <Text style={{width:'95%',borderWidth:1,padding:10}}><FontAwesome name="map-pin" size={30} color="gray" /> Namn eller Gatan: {Name}</Text>
-      <Text style={{width:'95%',borderWidth:1,padding:10}}><FontAwesome name="credit-card-alt" size={30} color="gray" /> Pris Just Nu:{CurrentParkingCost}</Text>
-      <Text style={{width:'95%',borderWidth:1,padding:10}}><FontAwesome name="map-signs" size={30} color="gray" /> Avstånde:{Distance}</Text>
-      <Text style={{ width:'95%',borderWidth:1,padding:10}}><FontAwesome name="tablet" size={30} color="gray" /> Phone Code:{PhoneParkingCode}</Text>
-      <Text style={{ width:'95%',borderWidth:1,padding:10}}><FontAwesome name="automobile" size={30} color="gray" /> Antal Parking Platser:{ParkingSpaces}</Text>
-      <Text style={{ width:'95%',borderWidth:1,padding:10}}><FontAwesome name="institution" size={30} color="gray" /> Parkering Unserhålls Av:{Owner}</Text>
-      <Text style={{width:'95%',borderWidth:1,padding:10}}><FontAwesome name="question" size={30} color="gray" /> Pris Plain:{ParkingCost}</Text>
-      <Text style={{width:'95%',borderWidth:1,padding:10}}><FontAwesome name="clock-o" size={30} color="gray" /> Tidsbegränsning:{MaxParkingTime} {MaxParkingTimeLimitation}</Text>
-      <Text style={{width:'95%',borderWidth:1,padding:10}}><FontAwesome name="info" size={30} color="gray" /> Extra Info:{ExtraInfo}</Text>
+     <ScrollView style={styles.scrollView} >
+      <Text style={styles.textInfo}><FontAwesome name="map-pin" size={30} color="gray" /> <Text style={styles.textTitle}>Namn eller Gatan:</Text> {Name}</Text>
+      <Text style={styles.textInfo}><FontAwesome name="credit-card-alt" size={30} color="gray" /> <Text style={styles.textTitle}> Pris Just Nu: </Text>{CurrentParkingCost} kr/tim</Text>
+      <Text style={styles.textInfo}><FontAwesome name="map-signs" size={30} color="gray" /> <Text style={styles.textTitle}>Avstånde: </Text>{Distance} m</Text>
+      <Text style={styles.textInfo}><FontAwesome name="tablet" size={30} color="gray" /> <Text style={styles.textTitle}>Phone Code: </Text>{PhoneParkingCode}</Text>
+      <Text style={styles.textInfo}><FontAwesome name="automobile" size={30} color="gray" /> <Text style={styles.textTitle}>Antal Parking Platser: </Text>{ParkingSpaces}</Text>
+      <Text style={styles.textInfo}><FontAwesome name="institution" size={30} color="gray" /> <Text style={styles.textTitle}>Parkering Unserhålls Av: </Text>{Owner}</Text>
+      <Text style={styles.textInfo}><FontAwesome name="question" size={30} color="gray" /> <Text style={styles.textTitle}>Pris Plain: </Text>{ParkingCost}</Text>
+      <Text style={styles.textInfo}><FontAwesome name="clock-o" size={30} color="gray" /> <Text style={styles.textTitle}>Tidsbegränsning: </Text>{MaxParkingTime} {MaxParkingTimeLimitation}</Text>
+      <Text style={styles.textInfo}><FontAwesome name="info" size={30} color="gray" /> <Text style={styles.textTitle}>Extra Info: </Text>{ExtraInfo}</Text>
+      </ScrollView> 
       <TouchableOpacity onPress={navigationTo}>
-        <View style={{width:'95%',borderWidth:1,paddingVertical:20, paddingHorizontal:100,marginTop:30}}>
-          <Text>Navigation</Text>
+        <View style={styles.btnNavigation}>
+          <Text style={styles.textBtnNavigation}>Navigation</Text>
         </View>
       </TouchableOpacity>
       
@@ -38,6 +47,33 @@ const styles = StyleSheet.create({
     alignItems: "center",
     textAlign: "center",
   },
+  textInfo: {
+    width:'100%',
+    paddingVertical:8,
+    paddingHorizontal:4,
+    fontSize:15
+  },
+  btnNavigation: {
+    width:'90%',
+    borderWidth:2,
+    borderRadius:7,
+    shadowColor:'black',
+    paddingVertical:'5%', 
+    paddingHorizontal:'30%',
+    marginVertical:15,
+  },
+  scrollView: {
+    width:'90%',
+    marginTop: 15,
+  },
+  textTitle: {
+    fontWeight:'bold',
+  },
+  textBtnNavigation: {
+    fontWeight:'bold',
+    fontSize:20
+  }
+
 });
 
 export default ParkingInfo;

@@ -1,16 +1,16 @@
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect, useRef } from "react";
 import { ActivityIndicator, Text } from "react-native";
 import MapView, { PROVIDER_DEFAULT } from "react-native-maps";
 
 const initialState = {
   latitude: null,
   longitude: null,
-  latitudeDelta: 0.006,
-  longitudeDelta: 0.006,
+  latitudeDelta: 0.01,
+  longitudeDelta: 0.01,
 };
 const parkings = []
 function AppMap  ({ navigation })  {
-
+  
   const [curentPosition, setCurentPosition] = useState(initialState);
   const [loadedParkings, setLoadedParkings] = useState([]);
 
@@ -31,7 +31,7 @@ function AppMap  ({ navigation })  {
         console.log(lat)
         console.log(lon)
 
-          fetch("http://data.goteborg.se/ParkingService/v2.1/PublicTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=11600&format=json")
+          fetch("http://data.goteborg.se/ParkingService/v2.1/PublicTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=600&format=json")
         .then((response) => {
           return response.json()
         })
@@ -39,15 +39,16 @@ function AppMap  ({ navigation })  {
           parkings.push(...data1)
         })
         .then(() => {
-          fetch("http://data.goteborg.se/ParkingService/v2.1/PrivateTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=11600&format=json")
+          fetch("http://data.goteborg.se/ParkingService/v2.1/PrivateTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=600&format=json")
         .then((response) => {
           return response.json()
         })
         .then((data2) => {
           parkings.push(...data2)
  
-          setLoadedParkings([...parkings])     
-        });
+          setLoadedParkings([...parkings]) 
+
+        })
         })
       });
       },[]
