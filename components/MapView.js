@@ -37,7 +37,7 @@ function AppMap  ({ navigation })  {
         })
         .then((data1) => {
           parkings.push(...data1)
-          console.log(parkings);
+          console.log("Public Time Parkings is ",data1);
          // setLoadedParkings([...data1])
         });
         fetch("http://data.goteborg.se/ParkingService/v2.1/PublicTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=600&format=json")
@@ -46,7 +46,7 @@ function AppMap  ({ navigation })  {
         })
         .then((data2) => {
           parkings.push(...data2)
-          console.log(parkings);
+          console.log("Public Toll Parkings is ",data2);
           //setLoadedParkings([...data2])
         });
         fetch("http://data.goteborg.se/ParkingService/v2.1/PrivateTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=600&format=json")
@@ -55,7 +55,26 @@ function AppMap  ({ navigation })  {
         })
         .then((data3) => {
           parkings.push(...data3)
-          console.log(parkings);
+          console.log("Private Toll Parkings is ",data3);
+          setLoadedParkings([...parkings])
+          
+        });        
+        fetch("http://data.goteborg.se/ParkingService/v2.1/HandicapParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=600&format=json")
+        .then((response) => {
+          return response.json()
+        })
+        .then((data4) => {
+          parkings.push(...data4)
+          console.log("Handicap Parkings is ",data4);
+          //setLoadedParkings([...data2])
+        });
+        fetch("http://data.goteborg.se/ParkingService/v2.1/PublicPayMachines/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=600&format=json")
+        .then((response) => {
+          return response.json()
+        })
+        .then((data5) => {
+          parkings.push(...data5)
+          console.log("Public Pay Machines is ",data5);
           setLoadedParkings([...parkings])
           
         });
