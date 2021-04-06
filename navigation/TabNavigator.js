@@ -1,6 +1,6 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { MainStackNavigator, ContactStackNavigator, InfoStackNavigator } from "./StackNavigator";
+import { MainStackNavigator, SettingStackNavigator, InfoStackNavigator } from "./StackNavigator";
 
 import Icon from '@expo/vector-icons/Ionicons';
 
@@ -18,7 +18,7 @@ const BottomTabNavigator = () => {
           iconName = focused ? 'home' : 'home-outline';
         } else if (route.name === 'InfoApp'){
           iconName = focused ? 'information-circle' : 'information-circle-outline';
-        } else if (route.name === 'Contact'){
+        } else if (route.name === 'Setting'){
           iconName = focused ? 'at-circle' : 'at-circle-outline';
         }
 
@@ -31,9 +31,10 @@ const BottomTabNavigator = () => {
       inactiveTintColor: 'gray',
     }}
     >
+      <Tab.Screen name="Setting" component={SettingStackNavigator} />
       <Tab.Screen name="HomeMap" component={MainStackNavigator} />
       <Tab.Screen name="InfoApp" component={InfoStackNavigator} />
-      <Tab.Screen name="Contact" component={ContactStackNavigator} />
+      
     </Tab.Navigator>
   );
 };
