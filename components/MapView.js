@@ -1,12 +1,12 @@
-import React, { useState,useEffect, useRef } from "react";
-import { ActivityIndicator, Text } from "react-native";
+import React, { useState,useEffect } from "react";
+import { ActivityIndicator, Text, View, StyleSheet } from "react-native";
 import MapView, { PROVIDER_DEFAULT } from "react-native-maps";
 
 const initialState = {
   latitude: null,
   longitude: null,
-  latitudeDelta: 0.01,
-  longitudeDelta: 0.01,
+  latitudeDelta: 0.007,
+  longitudeDelta: 0.007,
 };
 const parkings = []
 function AppMap  ({ navigation })  {
@@ -31,7 +31,7 @@ function AppMap  ({ navigation })  {
         console.log(lat)
         console.log(lon)
 
-          fetch("http://data.goteborg.se/ParkingService/v2.1/PublicTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=600&format=json")
+          fetch("http://data.goteborg.se/ParkingService/v2.1/PublicTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=8600&format=json")
         .then((response) => {
           return response.json()
         })
@@ -39,15 +39,16 @@ function AppMap  ({ navigation })  {
           parkings.push(...data1)
         })
         .then(() => {
-          fetch("http://data.goteborg.se/ParkingService/v2.1/PrivateTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=600&format=json")
+          fetch("http://data.goteborg.se/ParkingService/v2.1/PrivateTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=8600&format=json")
         .then((response) => {
           return response.json()
         })
         .then((data2) => {
           parkings.push(...data2)
+
+          parkings.sort((a,b)=>a.Distance - b.Distance)
  
           setLoadedParkings([...parkings]) 
-
         })
         })
       });
@@ -63,17 +64,19 @@ function AppMap  ({ navigation })  {
       showsScale={true}
     >
       {loadedParkings.map((parking) => {
-
         console.log(parking)
         return (
           <MapView.Marker
             coordinate={{ latitude: parking.Lat, longitude: parking.Long }}
             key={parking.Id}
-            pinColor={"purple"} // any color
+            pinColor={"purple"} // any color          
           >
-            <MapView.Callout onPress={() => navigation.navigate("ParkingInfo",parking)}>
+          <View style={styles.marker}>
+          <Text style={styles.textInfo}>{parking.CurrentParkingCost} kr/tim</Text>
+          </View>
+            <MapView.Callout style={styles.callout} onPress={() => navigation.navigate("ParkingInfo",parking)}>
                 <Text style={{"fontWeight": "bold"}}>{parking.Name + " Nu: " + parking.CurrentParkingCost + "kr/tim"}</Text>
-                <Text>{"Tptal Antal Platser: " + parking.ParkingSpaces}</Text>
+                <Text>{"Total Antal Platser: " + parking.ParkingSpaces}</Text>
                 <Text>{"Max tim: " + parking.MaxParkingTime}</Text> 
             </MapView.Callout>
           </MapView.Marker>
@@ -84,5 +87,20 @@ function AppMap  ({ navigation })  {
     <ActivityIndicator style={{ flex: 1 }} animating size="large" />
   );
 };
+
+const styles = StyleSheet.create({
+  marker:{
+    backgroundColor:'#550bbc',
+    padding:5,
+    borderRadius:5,
+  },
+  textInfo:{
+    color:'#FFF',
+    fontWeight:'bold',
+  },
+  callout: {
+    width: '200%',
+  }
+})
 
 export default AppMap;
