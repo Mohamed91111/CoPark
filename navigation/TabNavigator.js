@@ -1,6 +1,6 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { MainStackNavigator, OptionsStackNavigator, InfoStackNavigator } from "./StackNavigator";
+import { MainStackNavigator, SettingStackNavigator, InfoStackNavigator } from "./StackNavigator";
 
 import Icon from '@expo/vector-icons/Ionicons';
 
@@ -9,17 +9,17 @@ const Tab = createBottomTabNavigator();
 const BottomTabNavigator = () => {
   return (
     
-    <Tab.Navigator
+    <Tab.Navigator 
     screenOptions={({ route }) => ({
       tabBarIcon: ({ focused, color, size }) => {
         let iconName;
 
-        if (route.name === 'HomeMap') {
-          iconName = focused ? 'home' : 'home-outline';
-        } else if (route.name === 'InfoApp'){
+        if (route.name === 'Map') {
+          iconName = focused ? 'map' : 'map-outline';
+        } else if (route.name === 'Info'){
           iconName = focused ? 'information-circle' : 'information-circle-outline';
-        } else if (route.name === 'Options'){
-          iconName = focused ? 'options' : 'options-outline';
+        } else if (route.name === 'Setting'){
+          iconName = focused ? 'settings' : 'settings-outline';
         }
 
         // You can return any component that you like here!
@@ -27,14 +27,20 @@ const BottomTabNavigator = () => {
       },
     })}
     tabBarOptions={{
+      tabStyle: {
+        backgroundColor:"#FFF5EF",
+        width:"auto"
+      },
       activeTintColor: 'black',
       inactiveTintColor: 'gray',
     }}
     >
-      <Tab.Screen name="HomeMap" component={MainStackNavigator} />
-      <Tab.Screen name="InfoApp" component={InfoStackNavigator} />
-      <Tab.Screen name="Options" component={OptionsStackNavigator} />
+      <Tab.Screen name="Setting" component={SettingStackNavigator} />
+      <Tab.Screen name="Map" component={MainStackNavigator} />
+      <Tab.Screen name="Info" component={InfoStackNavigator} />
+      
     </Tab.Navigator>
+    
   );
 };
 
