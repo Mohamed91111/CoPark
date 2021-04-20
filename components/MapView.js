@@ -46,7 +46,7 @@ function AppMap  ({ navigation })  {
         .then((data2) => {
           parkings.push(...data2)
 
-          parkings.sort((a,b)=>a.Distance - b.Distance)
+          parkings.sort((a,b)=>a.CurrentParkingCost - b.CurrentParkingCost)
  
           setLoadedParkings([...parkings]) 
         })
@@ -63,7 +63,7 @@ function AppMap  ({ navigation })  {
       showsUserLocation={true}
       showsScale={true}
     >
-      {loadedParkings.map((parking) => {
+      {loadedParkings.map((parking,index) => {
         console.log(parking)
         return (
           <MapView.Marker
@@ -71,7 +71,11 @@ function AppMap  ({ navigation })  {
             key={parking.Id}
             pinColor={"purple"} // any color          
           >
-          <View style={styles.marker}>
+          <View style={{ 
+            backgroundColor: index ==0 ?"#550bbc" : "#177cbe",
+            padding: index == 0 ? 10 : 5,
+            borderRadius: 5,
+           }}>
           <Text style={styles.textInfo}>{parking.CurrentParkingCost} kr/tim</Text>
           </View>
             <MapView.Callout style={styles.callout} onPress={() => navigation.navigate("ParkingInfo",parking)}>
