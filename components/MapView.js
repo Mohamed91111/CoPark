@@ -8,6 +8,7 @@ const initialState = {
   latitudeDelta: 0.007,
   longitudeDelta: 0.007,
 };
+const sortParkings = []
 const parkings = []
 function AppMap  ({ navigation })  {
   
@@ -31,7 +32,7 @@ function AppMap  ({ navigation })  {
         console.log(lat)
         console.log(lon)
 
-          fetch("http://data.goteborg.se/ParkingService/v2.1/PublicTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=8600&format=json")
+          fetch("http://data.goteborg.se/ParkingService/v2.1/PublicTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=600&format=json")
         .then((response) => {
           return response.json()
         })
@@ -39,7 +40,7 @@ function AppMap  ({ navigation })  {
           parkings.push(...data1)
         })
         .then(() => {
-          fetch("http://data.goteborg.se/ParkingService/v2.1/PrivateTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=8600&format=json")
+          fetch("http://data.goteborg.se/ParkingService/v2.1/PrivateTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=600&format=json")
         .then((response) => {
           return response.json()
         })
@@ -47,8 +48,24 @@ function AppMap  ({ navigation })  {
           parkings.push(...data2)
 
           parkings.sort((a,b)=>a.CurrentParkingCost - b.CurrentParkingCost)
- 
-          setLoadedParkings([...parkings]) 
+
+          const sortPrice=(parkings[0].CurrentParkingCost);
+          let sortDistance=(parkings[0].Distance);
+          console.log("*************************"+sortPrice)
+          
+
+
+          for (let i = 0; i< parkings.length; i++) {
+            
+           if (sortPrice === parkings[i].CurrentParkingCost && sortDistance > parkings[i].Distance){
+             sortDistance = parkings[i].Distance;
+             sortParkings.unshift(parkings[i]);
+
+           }
+           sortParkings.push(parkings[i]);
+          }
+
+          setLoadedParkings([...sortParkings]) 
         })
         })
       });
