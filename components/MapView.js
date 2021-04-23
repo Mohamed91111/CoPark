@@ -61,8 +61,9 @@ function AppMap  ({ navigation })  {
              sortDistance = parkings[i].Distance;
              sortParkings.unshift(parkings[i]);
 
-           }
-           sortParkings.push(parkings[i]);
+            }else{
+            sortParkings.push(parkings[i]);
+            }
           }
 
           setLoadedParkings([...sortParkings]) 
