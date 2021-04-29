@@ -50,10 +50,7 @@ function AppMap  ({ navigation })  {
           parkings.sort((a,b)=>a.CurrentParkingCost - b.CurrentParkingCost)
 
           const sortPrice=(parkings[0].CurrentParkingCost);
-          let sortDistance=(parkings[0].Distance);
-          console.log("*************************"+sortPrice)
-          
-
+          let sortDistance=(parkings[0].Distance);        
 
           for (let i = 0; i< parkings.length; i++) {
             
@@ -90,16 +87,20 @@ function AppMap  ({ navigation })  {
             pinColor={"purple"} // any color          
           >
           <View style={{ 
-            backgroundColor: index ==0 ?"#550bbc" : "#177cbe",
-            padding: index == 0 ? 10 : 5,
+            backgroundColor: index ==0 ?"#212121" : "#f59300",
+            padding: index == 0 ? 7 : 5,
             borderRadius: 5,
            }}>
-          <Text style={styles.textInfo}>{parking.CurrentParkingCost} kr/tim</Text>
+          <Text style={{
+            color: index ==0 ?"#f59300" : "#212121",
+            fontWeight:'bold',
+            fontSize: index ==0 ?20 : 13,
+          }}>{parking.CurrentParkingCost} kr/tim</Text>
           </View>
             <MapView.Callout style={styles.callout} onPress={() => navigation.navigate("ParkingInfo",parking)}>
-                <Text style={{"fontWeight": "bold"}}>{parking.Name + " Nu: " + parking.CurrentParkingCost + "kr/tim"}</Text>
-                <Text>{"Total Antal Platser: " + parking.ParkingSpaces}</Text>
-                <Text>{"Max tim: " + parking.MaxParkingTime}</Text> 
+                <Text style={{"fontWeight": "bold",'color':'#f59300'}}>{parking.Name + " Nu: " + parking.CurrentParkingCost + "kr/tim"}</Text>
+                <Text style={styles.textInfo}>{"Total Antal Platser: " + parking.ParkingSpaces}</Text>
+                <Text style={styles.textInfo}>{"Max tim: " + parking.MaxParkingTime}</Text> 
             </MapView.Callout>
           </MapView.Marker>
         );
@@ -111,17 +112,15 @@ function AppMap  ({ navigation })  {
 };
 
 const styles = StyleSheet.create({
-  marker:{
-    backgroundColor:'#550bbc',
-    padding:5,
-    borderRadius:5,
-  },
   textInfo:{
-    color:'#FFF',
+    color:'#aaa',
     fontWeight:'bold',
   },
   callout: {
     width: '200%',
+    backgroundColor:'#212121',
+    padding:5,
+    alignItems:'center',
   }
 })
 

@@ -27,9 +27,14 @@ const BottomTabNavigator = () => {
       },
     })}
     tabBarOptions={{
-      activeTintColor: 'black',
-      inactiveTintColor: 'gray',
+      activeTintColor: '#f59300',
+      inactiveTintColor: '#212121',
+      activeBackgroundColor: '#212121',
+           style: {
+                 backgroundColor: '#f59300',
+           }
     }}
+    
     >
       <Tab.Screen name="HomeMap" component={MainStackNavigator} />
       <Tab.Screen name="InfoApp" component={InfoStackNavigator} />
