@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from "react";
-import { ActivityIndicator, Text, View, StyleSheet } from "react-native";
+import { ActivityIndicator, Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import MapView, { PROVIDER_DEFAULT } from "react-native-maps";
+import { FontAwesome } from "@expo/vector-icons";
 
 const initialState = {
   latitude: null,
@@ -48,6 +49,7 @@ function AppMap  ({ navigation })  {
           parkings.push(...data2)
 
           parkings.sort((a,b)=>a.CurrentParkingCost - b.CurrentParkingCost)
+          console.log(parkings)
 
           const sortPrice=(parkings[0].CurrentParkingCost);
           let sortDistance=(parkings[0].Distance);        
@@ -94,13 +96,14 @@ function AppMap  ({ navigation })  {
           <Text style={{
             color: index ==0 ?"#f59300" : "#212121",
             fontWeight:'bold',
-            fontSize: index ==0 ?20 : 13,
+            fontSize: index ==0 ?20 : 15,
           }}>{parking.CurrentParkingCost} kr/tim</Text>
           </View>
             <MapView.Callout style={styles.callout} onPress={() => navigation.navigate("ParkingInfo",parking)}>
-                <Text style={{"fontWeight": "bold",'color':'#f59300'}}>{parking.Name + " Nu: " + parking.CurrentParkingCost + "kr/tim"}</Text>
+                <Text style={{"fontWeight": "bold",'color':'#f59300'}}>{parking.Name }</Text>
+                <Text style={{"fontWeight": "bold",'color':'#f59300'}}>{" Pris: " + parking.CurrentParkingCost + "kr/tim"}</Text>
                 <Text style={styles.textInfo}>{"Total Antal Platser: " + parking.ParkingSpaces}</Text>
-                <Text style={styles.textInfo}>{"Max tim: " + parking.MaxParkingTime}</Text> 
+                {parking.MaxParkingTime !== undefined &&<Text style={styles.textInfo}>{"Tidsbegränsning: " + parking.MaxParkingTime.substring(0,6)}</Text>}
             </MapView.Callout>
           </MapView.Marker>
         );
@@ -117,11 +120,11 @@ const styles = StyleSheet.create({
     fontWeight:'bold',
   },
   callout: {
-    width: '200%',
+    width: '250%',
     backgroundColor:'#212121',
     padding:5,
     alignItems:'center',
-  }
+  },
 })
 
 export default AppMap;
