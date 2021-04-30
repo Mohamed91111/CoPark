@@ -8,6 +8,7 @@ const initialState = {
   latitudeDelta: 0.007,
   longitudeDelta: 0.007,
 };
+const sortParkings = []
 const parkings = []
 function AppMap  ({ navigation })  {
   
@@ -31,7 +32,7 @@ function AppMap  ({ navigation })  {
         console.log(lat)
         console.log(lon)
 
-          fetch("http://data.goteborg.se/ParkingService/v2.1/PublicTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=8600&format=json")
+          fetch("http://data.goteborg.se/ParkingService/v2.1/PublicTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=600&format=json")
         .then((response) => {
           return response.json()
         })
@@ -39,16 +40,30 @@ function AppMap  ({ navigation })  {
           parkings.push(...data1)
         })
         .then(() => {
-          fetch("http://data.goteborg.se/ParkingService/v2.1/PrivateTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=8600&format=json")
+          fetch("http://data.goteborg.se/ParkingService/v2.1/PrivateTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=600&format=json")
         .then((response) => {
           return response.json()
         })
         .then((data2) => {
           parkings.push(...data2)
 
-          parkings.sort((a,b)=>a.Distance - b.Distance)
- 
-          setLoadedParkings([...parkings]) 
+          parkings.sort((a,b)=>a.CurrentParkingCost - b.CurrentParkingCost)
+
+          const sortPrice=(parkings[0].CurrentParkingCost);
+          let sortDistance=(parkings[0].Distance);        
+
+          for (let i = 0; i< parkings.length; i++) {
+            
+           if (sortPrice === parkings[i].CurrentParkingCost && sortDistance > parkings[i].Distance){
+             sortDistance = parkings[i].Distance;
+             sortParkings.unshift(parkings[i]);
+
+            }else{
+            sortParkings.push(parkings[i]);
+            }
+          }
+
+          setLoadedParkings([...sortParkings]) 
         })
         })
       });
@@ -63,7 +78,7 @@ function AppMap  ({ navigation })  {
       showsUserLocation={true}
       showsScale={true}
     >
-      {loadedParkings.map((parking) => {
+      {loadedParkings.map((parking,index) => {
         console.log(parking)
         return (
           <MapView.Marker
@@ -71,13 +86,21 @@ function AppMap  ({ navigation })  {
             key={parking.Id}
             pinColor={"purple"} // any color          
           >
-          <View style={styles.marker}>
-          <Text style={styles.textInfo}>{parking.CurrentParkingCost} kr/tim</Text>
+          <View style={{ 
+            backgroundColor: index ==0 ?"#212121" : "#f59300",
+            padding: index == 0 ? 7 : 5,
+            borderRadius: 5,
+           }}>
+          <Text style={{
+            color: index ==0 ?"#f59300" : "#212121",
+            fontWeight:'bold',
+            fontSize: index ==0 ?20 : 13,
+          }}>{parking.CurrentParkingCost} kr/tim</Text>
           </View>
             <MapView.Callout style={styles.callout} onPress={() => navigation.navigate("ParkingInfo",parking)}>
-                <Text style={{"fontWeight": "bold"}}>{parking.Name + " Nu: " + parking.CurrentParkingCost + "kr/tim"}</Text>
-                <Text>{"Total Antal Platser: " + parking.ParkingSpaces}</Text>
-                <Text>{"Max tim: " + parking.MaxParkingTime}</Text> 
+                <Text style={{"fontWeight": "bold",'color':'#f59300'}}>{parking.Name + " Nu: " + parking.CurrentParkingCost + "kr/tim"}</Text>
+                <Text style={styles.textInfo}>{"Total Antal Platser: " + parking.ParkingSpaces}</Text>
+                <Text style={styles.textInfo}>{"Max tim: " + parking.MaxParkingTime}</Text> 
             </MapView.Callout>
           </MapView.Marker>
         );
@@ -89,17 +112,15 @@ function AppMap  ({ navigation })  {
 };
 
 const styles = StyleSheet.create({
-  marker:{
-    backgroundColor:'#550bbc',
-    padding:5,
-    borderRadius:5,
-  },
   textInfo:{
-    color:'#FFF',
+    color:'#aaa',
     fontWeight:'bold',
   },
   callout: {
     width: '200%',
+    backgroundColor:'#212121',
+    padding:5,
+    alignItems:'center',
   }
 })
 
