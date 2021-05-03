@@ -2,6 +2,8 @@ import React, { useState,useEffect } from "react";
 import { ActivityIndicator, Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import MapView, { PROVIDER_DEFAULT } from "react-native-maps";
 import { FontAwesome } from "@expo/vector-icons";
+import {Restart} from 'fiction-expo-restart';
+
 
 const initialState = {
   latitude: null,
@@ -80,6 +82,13 @@ function AppMap  ({ navigation })  {
       showsUserLocation={true}
       showsScale={true}
     >
+
+        <TouchableOpacity style={styles.refresh} onPress={()=>{Restart()}}>
+          <View >
+              <FontAwesome name="refresh" size={40} color="#f59300" /> 
+          </View>
+        </TouchableOpacity>
+
       {loadedParkings.map((parking,index) => {
         console.log(parking)
         return (
@@ -101,8 +110,8 @@ function AppMap  ({ navigation })  {
           </View>
             <MapView.Callout style={styles.callout} onPress={() => navigation.navigate("ParkingInfo",parking)}>
                 <Text style={{"fontWeight": "bold",'color':'#f59300'}}>{parking.Name }</Text>
-                <Text style={{"fontWeight": "bold",'color':'#f59300'}}>{" Pris: " + parking.CurrentParkingCost + "kr/tim"}</Text>
-                <Text style={styles.textInfo}>{"Total Antal Platser: " + parking.ParkingSpaces}</Text>
+                {parking.CurrentParkingCost !== undefined && <Text style={{"fontWeight": "bold",'color':'#f59300'}}>{" Pris: " + parking.CurrentParkingCost + " kr/tim"}</Text>}
+                {parking.ParkingSpaces !== undefined &&<Text style={styles.textInfo}>{"Total Antal Platser: " + parking.ParkingSpaces}</Text>}
                 {parking.MaxParkingTime !== undefined &&<Text style={styles.textInfo}>{"Tidsbegränsning: " + parking.MaxParkingTime.substring(0,6)}</Text>}
             </MapView.Callout>
           </MapView.Marker>
@@ -125,6 +134,12 @@ const styles = StyleSheet.create({
     padding:5,
     alignItems:'center',
   },
+  refresh: {
+    backgroundColor:'#212121',
+    width: 40,
+    borderRadius: 5,
+    padding:2
+  }
 })
 
 export default AppMap;

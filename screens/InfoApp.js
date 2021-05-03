@@ -26,7 +26,6 @@ const InfoApp = () => {
             </Text>
           </View>
         </TouchableOpacity>
-        
       </View>
       <View style={styles.versionBox}>
       <Text style={styles.versionText}>App Version: 1.0.1</Text> 

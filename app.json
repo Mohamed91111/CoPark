@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/p-icon.png",
     "splash": {
-      "image": "./assets/codic-logo-svart.png",
+      "image": "./assets/p-codic.png",
       "resizeMode": "contain",
       "backgroundColor": "#f59300"
     },
