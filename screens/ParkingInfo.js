@@ -23,7 +23,7 @@ const ParkingInfo = ({route,navigation}) => {
       {ParkingSpaces !== undefined && <Text style={styles.textInfo}><FontAwesome name="automobile" size={30} color="#f59300" /> <Text style={styles.textTitle}>Antal Parking Platser: </Text>{ParkingSpaces}</Text>}
       {Owner !== undefined && <Text style={styles.textInfo}><FontAwesome name="institution" size={30} color="#f59300" /> <Text style={styles.textTitle}>Parkering Unserhålls Av: </Text>{Owner}</Text>}
       {ParkingCost !== undefined && <Text style={styles.textInfo}><FontAwesome name="question" size={30} color="#f59300" /> <Text style={styles.textTitle}>Pris Plain: </Text>{ParkingCost}</Text>}
-      {MaxParkingTime || MaxParkingTimeLimitation !== undefined && <Text style={styles.textInfo}><FontAwesome name="clock-o" size={30} color="#f59300" /> <Text style={styles.textTitle}>Tidsbegränsning: </Text>{MaxParkingTime} {MaxParkingTimeLimitation}</Text>}
+      {MaxParkingTime !== undefined && <Text style={styles.textInfo}><FontAwesome name="clock-o" size={30} color="#f59300" /> <Text style={styles.textTitle}>Tidsbegränsning: </Text>{MaxParkingTime} {MaxParkingTimeLimitation}</Text>}
       {ExtraInfo !== undefined && <Text style={styles.textInfo}><FontAwesome name="info" size={30} color="#f59300" /> <Text style={styles.textTitle}>Extra Info: </Text>{ExtraInfo}</Text>}
       </ScrollView> 
       <TouchableOpacity onPress={navigationTo}>
