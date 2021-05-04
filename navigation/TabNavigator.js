@@ -27,13 +27,23 @@ const BottomTabNavigator = () => {
       },
     })}
     tabBarOptions={{
+<<<<<<< HEAD
       tabStyle: {
         backgroundColor:"#FFF5EF",
         width:"auto"
       },
       activeTintColor: 'black',
       inactiveTintColor: 'gray',
+=======
+      activeTintColor: '#f59300',
+      inactiveTintColor: '#212121',
+      activeBackgroundColor: '#212121',
+           style: {
+                 backgroundColor: '#f59300',
+           }
+>>>>>>> 3a600911ddeafeed40fa135b9fa73b138ee6e288
     }}
+    
     >
       <Tab.Screen name="Setting" component={SettingStackNavigator} />
       <Tab.Screen name="Map" component={MainStackNavigator} />
