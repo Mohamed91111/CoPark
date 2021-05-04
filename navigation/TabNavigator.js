@@ -18,25 +18,25 @@ const BottomTabNavigator = () => {
           iconName = focused ? 'map' : 'map-outline';
         } else if (route.name === 'Info'){
           iconName = focused ? 'information-circle' : 'information-circle-outline';
-        } else if (route.name === 'Setting'){
+        }/* else if (route.name === 'Setting'){
           iconName = focused ? 'settings' : 'settings-outline';
-        }
+        }*/
 
         // You can return any component that you like here!
         return <Icon name={iconName} size={size}  color={color}/>;
       },
     })}
     tabBarOptions={{
-      activeTintColor: '#f59300',
+      activeTintColor: '#f7b045',
       inactiveTintColor: '#212121',
       activeBackgroundColor: '#212121',
            style: {
-                 backgroundColor: '#f59300',
+                 backgroundColor: '#f7b045',
            }
     }}
     
     >
-      <Tab.Screen name="Setting" component={SettingStackNavigator} />
+       
       <Tab.Screen name="Map" component={MainStackNavigator} />
       <Tab.Screen name="Info" component={InfoStackNavigator} />
       
@@ -44,5 +44,5 @@ const BottomTabNavigator = () => {
     
   );
 };
-
+//<Tab.Screen name="Setting" component={SettingStackNavigator} /> 
 export default BottomTabNavigator;
