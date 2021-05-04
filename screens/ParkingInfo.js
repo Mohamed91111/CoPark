@@ -16,15 +16,15 @@ const ParkingInfo = ({route,navigation}) => {
   return (
     <View style={styles.center}>
      <ScrollView style={styles.scrollView} >
-      <Text style={styles.textInfo}><FontAwesome name="map-pin" size={30} color="#f59300" /> <Text style={styles.textTitle}>Namn eller Gatan:</Text> {Name}</Text>
-      <Text style={styles.textInfo}><FontAwesome name="credit-card-alt" size={30} color="#f59300" /> <Text style={styles.textTitle}> Pris Just Nu: </Text>{CurrentParkingCost} kr/tim</Text>
-      <Text style={styles.textInfo}><FontAwesome name="map-signs" size={30} color="#f59300" /> <Text style={styles.textTitle}>Avstånde: </Text>{Distance} m</Text>
-      <Text style={styles.textInfo}><FontAwesome name="tablet" size={30} color="#f59300" /> <Text style={styles.textTitle}>Phone Code: </Text>{PhoneParkingCode}</Text>
-      <Text style={styles.textInfo}><FontAwesome name="automobile" size={30} color="#f59300" /> <Text style={styles.textTitle}>Antal Parking Platser: </Text>{ParkingSpaces}</Text>
-      <Text style={styles.textInfo}><FontAwesome name="institution" size={30} color="#f59300" /> <Text style={styles.textTitle}>Parkering Unserhålls Av: </Text>{Owner}</Text>
-      <Text style={styles.textInfo}><FontAwesome name="question" size={30} color="#f59300" /> <Text style={styles.textTitle}>Pris Plain: </Text>{ParkingCost}</Text>
-      <Text style={styles.textInfo}><FontAwesome name="clock-o" size={30} color="#f59300" /> <Text style={styles.textTitle}>Tidsbegränsning: </Text>{MaxParkingTime} {MaxParkingTimeLimitation}</Text>
-      <Text style={styles.textInfo}><FontAwesome name="info" size={30} color="#f59300" /> <Text style={styles.textTitle}>Extra Info: </Text>{ExtraInfo}</Text>
+      {Name !== undefined && <Text style={styles.textInfo}><FontAwesome name="map-pin" size={30} color="#f59300" /> <Text style={styles.textTitle}>Namn eller Gatan:</Text> {Name}</Text>}
+      {CurrentParkingCost !== undefined && <Text style={styles.textInfo}><FontAwesome name="credit-card-alt" size={30} color="#f59300" /> <Text style={styles.textTitle}> Pris Just Nu: </Text>{CurrentParkingCost} kr/tim</Text>}
+      {Distance !== undefined && <Text style={styles.textInfo}><FontAwesome name="map-signs" size={30} color="#f59300" /> <Text style={styles.textTitle}>Avstånde: </Text>{Distance} m</Text>}
+      {PhoneParkingCode !== undefined && <Text style={styles.textInfo}><FontAwesome name="tablet" size={30} color="#f59300" /> <Text style={styles.textTitle}>Phone Code: </Text>{PhoneParkingCode}</Text>}
+      {ParkingSpaces !== undefined && <Text style={styles.textInfo}><FontAwesome name="automobile" size={30} color="#f59300" /> <Text style={styles.textTitle}>Antal Parking Platser: </Text>{ParkingSpaces}</Text>}
+      {Owner !== undefined && <Text style={styles.textInfo}><FontAwesome name="institution" size={30} color="#f59300" /> <Text style={styles.textTitle}>Parkering Unserhålls Av: </Text>{Owner}</Text>}
+      {ParkingCost !== undefined && <Text style={styles.textInfo}><FontAwesome name="question" size={30} color="#f59300" /> <Text style={styles.textTitle}>Pris Plain: </Text>{ParkingCost}</Text>}
+      {MaxParkingTime || MaxParkingTimeLimitation !== undefined && <Text style={styles.textInfo}><FontAwesome name="clock-o" size={30} color="#f59300" /> <Text style={styles.textTitle}>Tidsbegränsning: </Text>{MaxParkingTime} {MaxParkingTimeLimitation}</Text>}
+      {ExtraInfo !== undefined && <Text style={styles.textInfo}><FontAwesome name="info" size={30} color="#f59300" /> <Text style={styles.textTitle}>Extra Info: </Text>{ExtraInfo}</Text>}
       </ScrollView> 
       <TouchableOpacity onPress={navigationTo}>
         <View style={styles.btnNavigation}>

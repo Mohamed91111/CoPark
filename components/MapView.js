@@ -1,9 +1,6 @@
 import React, { useState,useEffect } from "react";
 import { ActivityIndicator, Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import MapView, { PROVIDER_DEFAULT } from "react-native-maps";
-import { FontAwesome } from "@expo/vector-icons";
-import {Restart} from 'fiction-expo-restart';
-
 
 const initialState = {
   latitude: null,
@@ -13,6 +10,7 @@ const initialState = {
 };
 const sortParkings = []
 const parkings = []
+
 function AppMap  ({ navigation })  {
   
   const [curentPosition, setCurentPosition] = useState(initialState);
@@ -82,12 +80,6 @@ function AppMap  ({ navigation })  {
       showsUserLocation={true}
       showsScale={true}
     >
-
-        <TouchableOpacity style={styles.refresh} onPress={()=>{Restart()}}>
-          <View >
-              <FontAwesome name="refresh" size={40} color="#f59300" /> 
-          </View>
-        </TouchableOpacity>
 
       {loadedParkings.map((parking,index) => {
         console.log(parking)
