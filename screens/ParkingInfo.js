@@ -29,14 +29,14 @@ const ParkingInfo = ({route,navigation}) => {
           <CardItem style={styles.cardItem}>
             <Body style={styles.body}>
     <ScrollView style={styles.scrollView} >
-    <Text style={styles.textInfo}><Icon name="card-outline" size={20} color="#f7b045"></Icon> <Text style={styles.textTitle}> Pris Just Nu: </Text>{CurrentParkingCost} kr/tim</Text>
-    <Text style={styles.textInfo}><Icon name="locate-outline" size={20} color="#f7b045"></Icon>  <Text style={styles.textTitle}>Avstånde: </Text>{Distance} m</Text>
-    <Text style={styles.textInfo}><Icon name="phone-portrait-outline" size={20} color="#f7b045"></Icon>  <Text style={styles.textTitle}>Phone Code: </Text>{PhoneParkingCode}</Text>
-    <Text style={styles.textInfo}><Icon name="car-outline" size={20} color="#f7b045"></Icon>  <Text style={styles.textTitle}>Antal Parking Platser: </Text>{ParkingSpaces}</Text>
-    <Text style={styles.textInfo}><Icon name="business-outline" size={20} color="#f7b045"></Icon>  <Text style={styles.textTitle}>Parkering Unserhålls Av: </Text>{Owner}</Text>
-    <Text style={styles.textInfo}><Icon name="cash-outline" size={20} color="#f7b045"></Icon>  <Text style={styles.textTitle}>Pris Plain: </Text>{ParkingCost}</Text>
-    <Text style={styles.textInfo}><Icon name="time-outline" size={20} color="#f7b045"></Icon>  <Text style={styles.textTitle}>Tidsbegränsning: </Text>{MaxParkingTime} {MaxParkingTimeLimitation}</Text>
-    <Text style={styles.textInfo}><Icon name="information-outline" size={20} color="#f7b045"></Icon>  <Text style={styles.textTitle}>Extra Info: </Text>{ExtraInfo}</Text>
+    {CurrentParkingCost !== undefined && <Text style={styles.textInfo}><Icon name="card-outline" size={20} color="#f7b045"></Icon> <Text style={styles.textTitle}> Pris Just Nu: </Text>{CurrentParkingCost} kr/tim</Text>}
+    {Distance !== undefined && <Text style={styles.textInfo}><Icon name="locate-outline" size={20} color="#f7b045"></Icon>  <Text style={styles.textTitle}>Avstånde: </Text>{Distance} m</Text>}
+    {PhoneParkingCode !== undefined && <Text style={styles.textInfo}><Icon name="phone-portrait-outline" size={20} color="#f7b045"></Icon>  <Text style={styles.textTitle}>Phone Code: </Text>{PhoneParkingCode}</Text>}
+    {ParkingSpaces !== undefined &&<Text style={styles.textInfo}><Icon name="car-outline" size={20} color="#f7b045"></Icon>  <Text style={styles.textTitle}>Antal Parking Platser: </Text>{ParkingSpaces}</Text>}
+    {Owner !== undefined && <Text style={styles.textInfo}><Icon name="business-outline" size={20} color="#f7b045"></Icon>  <Text style={styles.textTitle}>Parkering Unserhålls Av: </Text>{Owner}</Text>}
+    {ParkingCost !== undefined && <Text style={styles.textInfo}><Icon name="cash-outline" size={20} color="#f7b045"></Icon>  <Text style={styles.textTitle}>Pris Plain: </Text>{ParkingCost}</Text>}
+    {MaxParkingTime !== undefined && <Text style={styles.textInfo}><Icon name="time-outline" size={20} color="#f7b045"></Icon>  <Text style={styles.textTitle}>Tidsbegränsning: </Text>{MaxParkingTime} {MaxParkingTimeLimitation}</Text>}
+    {ExtraInfo !== undefined && <Text style={styles.textInfo}><Icon name="information-outline" size={20} color="#f7b045"></Icon>  <Text style={styles.textTitle}>Extra Info: </Text>{ExtraInfo}</Text>}
     </ScrollView>
     </Body>
           </CardItem>
