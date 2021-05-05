@@ -43,7 +43,7 @@ function AppMap({ navigation }) {
           lat +
           "&longitude=" +
           lon +
-          "&radius=8600&format=json"
+          "&radius=600&format=json"
       )
         .then((response) => {
           return response.json();
@@ -57,7 +57,7 @@ function AppMap({ navigation }) {
               lat +
               "&longitude=" +
               lon +
-              "&radius=8600&format=json"
+              "&radius=600&format=json"
           )
             .then((response) => {
               return response.json();
