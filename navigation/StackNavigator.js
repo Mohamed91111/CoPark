@@ -1,7 +1,5 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-
-import HomeMap from "../screens/HomeMap";
 import ParkingInfo from "../screens/ParkingInfo";
 import InfoApp from "../screens/InfoApp";
 import Setting from "../screens/Setting";

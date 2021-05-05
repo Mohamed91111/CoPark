@@ -20,13 +20,11 @@ function AppMap({ navigation }) {
   const [curentPosition, setCurentPosition] = useState(initialState);
   const [loadedParkings, setLoadedParkings] = useState([]);
   const [restart, setRestart] = useState(false);
-
   const [sortParkings, setSortParkings] = useState([]);
   const [parkings, setParkings] = useState([]);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
-      //alert(JSON.stringify(position))
       const { longitude, latitude } = position.coords;
       setCurentPosition({
         ...curentPosition,
@@ -39,9 +37,6 @@ function AppMap({ navigation }) {
 
       const lat = position.coords.latitude.toString();
       const lon = position.coords.longitude.toString();
-
-      console.log(lat);
-      console.log(lon);
 
       fetch(
         "http://data.goteborg.se/ParkingService/v2.1/PublicTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude=" +
@@ -70,9 +65,14 @@ function AppMap({ navigation }) {
             .then((data2) => {
               parkings.push(...data2);
 
-              parkings.sort(
-                (a, b) => a.CurrentParkingCost - b.CurrentParkingCost
-              );
+              if(parkings.length > 0) {
+                parkings.sort(
+                  (a, b) => a.CurrentParkingCost - b.CurrentParkingCost
+                );
+              }else{
+                return;
+              }
+              
 
               const sortPrice = parkings[0].CurrentParkingCost;
               let sortDistance = parkings[0].Distance;
@@ -113,7 +113,6 @@ function AppMap({ navigation }) {
       </TouchableOpacity>
 
       {loadedParkings.map((parking, index) => {
-        console.log(parking);
         return (
           <MapView.Marker
             coordinate={{ latitude: parking.Lat, longitude: parking.Long }}
