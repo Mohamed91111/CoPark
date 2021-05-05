@@ -14,10 +14,7 @@
     "@react-navigation/stack": "^5.14.3",
     "expo": "^40.0.1",
     "expo-status-bar": "~1.0.3",
-<<<<<<< HEAD
-=======
     "fiction-expo-restart": "^1.0.9",
->>>>>>> ce7686cadbae6dfaf1dbdcbdccf3b4c88984accb
     "native-base": "^2.15.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
