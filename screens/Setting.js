@@ -6,10 +6,10 @@ const Setting = () => {
   return (
     <View style={styles.center}>
       <Container >
-        <Header />
-        <Content >
+        <Content style={{backgroundColor:"#EFDFDD"}}>
           <Item style={styles.Item} regular>
-            <Input  placeholder='Radius' />
+            <Input  placeholder='Radius'
+                    keyboardType = 'numeric' />
           </Item>
           <View style={{marginTop:50}}>
           <ListItem icon>
@@ -54,8 +54,8 @@ const Setting = () => {
           </ListItem>
           </View>
           <View style={{display: "flex"},{flexDirection:"row"}}>
-          <Button style={styles.Button} info><Text style={{textAlign: "center"}}> Save </Text></Button> 
-          <Button style={styles.Button} success><Text style={{textAlign: "center"}}> Search </Text></Button>
+          <Button style={styles.Button} info><Text style={{marginLeft:20}}> Save </Text></Button> 
+          <Button style={styles.Button} success><Text style={{marginLeft:15}}> Search </Text></Button>
           </View>
         </Content>
       </Container>
@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
       marginLeft:10,
       marginRight:10,
       borderRadius:5,
+      marginTop:50
     },
   Button:{
       marginVertical:30,

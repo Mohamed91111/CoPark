@@ -1,86 +1,99 @@
-import React, { useState,useEffect } from "react";
-import { ActivityIndicator, Text } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  ActivityIndicator,
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import MapView, { PROVIDER_DEFAULT } from "react-native-maps";
+import { FontAwesome } from "@expo/vector-icons";
 
 const initialState = {
   latitude: null,
   longitude: null,
-  latitudeDelta: 0.005,
-  longitudeDelta: 0.005,
+  latitudeDelta: 0.007,
+  longitudeDelta: 0.007,
 };
-const parkings = []
-function AppMap  ({ navigation })  {
 
+function AppMap({ navigation }) {
   const [curentPosition, setCurentPosition] = useState(initialState);
   const [loadedParkings, setLoadedParkings] = useState([]);
+  const [restart, setRestart] = useState(false);
 
-   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        //alert(JSON.stringify(position))
-        const { longitude, latitude } = position.coords;
-         setCurentPosition({
-          ...curentPosition,
-          latitude,
-          longitude,
-        });
+  const [sortParkings, setSortParkings] = useState([]);
+  const [parkings, setParkings] = useState([]);
 
-        const lat = position.coords.latitude.toString()
-        const lon = position.coords.longitude.toString()
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      //alert(JSON.stringify(position))
+      const { longitude, latitude } = position.coords;
+      setCurentPosition({
+        ...curentPosition,
+        latitude,
+        longitude,
+      });
 
-        console.log("My latitude is ",lat)
-        console.log("My longitude is ",lon)
-        
-        fetch("http://data.goteborg.se/ParkingService/v2.1/PublicTimeParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=600&format=json")
+      setParkings([]);
+      setSortParkings([]);
+
+      const lat = position.coords.latitude.toString();
+      const lon = position.coords.longitude.toString();
+
+      console.log(lat);
+      console.log(lon);
+
+      fetch(
+        "http://data.goteborg.se/ParkingService/v2.1/PublicTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude=" +
+          lat +
+          "&longitude=" +
+          lon +
+          "&radius=600&format=json"
+      )
         .then((response) => {
-          return response.json()
+          return response.json();
         })
         .then((data1) => {
-          parkings.push(...data1)
-          console.log("Public Time Parkings is ",data1);
-         // setLoadedParkings([...data1])
-        });
-        fetch("http://data.goteborg.se/ParkingService/v2.1/PublicTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=600&format=json")
-        .then((response) => {
-          return response.json()
+          parkings.push(...data1);
         })
-        .then((data2) => {
-          parkings.push(...data2)
-          console.log("Public Toll Parkings is ",data2);
-          //setLoadedParkings([...data2])
+        .then(() => {
+          fetch(
+            "http://data.goteborg.se/ParkingService/v2.1/PrivateTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude=" +
+              lat +
+              "&longitude=" +
+              lon +
+              "&radius=600&format=json"
+          )
+            .then((response) => {
+              return response.json();
+            })
+            .then((data2) => {
+              parkings.push(...data2);
+
+              parkings.sort(
+                (a, b) => a.CurrentParkingCost - b.CurrentParkingCost
+              );
+
+              const sortPrice = parkings[0].CurrentParkingCost;
+              let sortDistance = parkings[0].Distance;
+
+              for (let i = 0; i < parkings.length; i++) {
+                if (
+                  sortPrice === parkings[i].CurrentParkingCost &&
+                  sortDistance > parkings[i].Distance
+                ) {
+                  sortDistance = parkings[i].Distance;
+                  sortParkings.unshift(parkings[i]);
+                } else {
+                  sortParkings.push(parkings[i]);
+                }
+              }
+
+              setLoadedParkings([...sortParkings]);
+            });
         });
-        fetch("http://data.goteborg.se/ParkingService/v2.1/PrivateTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=600&format=json")
-        .then((response) => {
-          return response.json()
-        })
-        .then((data3) => {
-          parkings.push(...data3)
-          console.log("Private Toll Parkings is ",data3);
-          setLoadedParkings([...parkings])
-          
-        });        
-        fetch("http://data.goteborg.se/ParkingService/v2.1/HandicapParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=600&format=json")
-        .then((response) => {
-          return response.json()
-        })
-        .then((data4) => {
-          parkings.push(...data4)
-          console.log("Handicap Parkings is ",data4);
-          //setLoadedParkings([...data2])
-        });
-        fetch("http://data.goteborg.se/ParkingService/v2.1/PublicPayMachines/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=600&format=json")
-        .then((response) => {
-          return response.json()
-        })
-        .then((data5) => {
-          parkings.push(...data5)
-          console.log("Public Pay Machines is ",data5);
-          setLoadedParkings([...parkings])
-          
-        });
-      });
-      },[]
-    )
+    });
+  }, [restart]);
 
   return curentPosition.latitude ? (
     <MapView
@@ -90,17 +103,60 @@ function AppMap  ({ navigation })  {
       showsUserLocation={true}
       showsScale={true}
     >
-      {loadedParkings.map((parking) => {
+      <TouchableOpacity
+        style={styles.refresh}
+        onPress={() => setRestart(!restart)}
+      >
+        <View>
+          <FontAwesome name="refresh" size={40} color="#f59300" />
+        </View>
+      </TouchableOpacity>
+
+      {loadedParkings.map((parking, index) => {
+        console.log(parking);
         return (
           <MapView.Marker
             coordinate={{ latitude: parking.Lat, longitude: parking.Long }}
             key={parking.Id}
             pinColor={"purple"} // any color
           >
-            <MapView.Callout onPress={() => navigation.navigate("ParkingInfo")}>
-                <Text style={{"fontWeight": "bold"}}>{parking.Name + " Nu: " + parking.CurrentParkingCost + "kr/tim"}</Text>
-                <Text>{"Tptal Antal Platser: " + parking.ParkingSpaces}</Text>
-                <Text>{"Max tim: " + parking.MaxParkingTime}</Text> 
+            <View
+              style={{
+                backgroundColor: index == 0 ? "#212121" : "#f59300",
+                padding: index == 0 ? 7 : 5,
+                borderRadius: 5,
+              }}
+            >
+              <Text
+                style={{
+                  color: index == 0 ? "#f59300" : "#212121",
+                  fontWeight: "bold",
+                  fontSize: index == 0 ? 20 : 15,
+                }}
+              >
+                {parking.CurrentParkingCost} kr/tim
+              </Text>
+            </View>
+            <MapView.Callout
+              style={styles.callout}
+              onPress={() => navigation.navigate("ParkingInfo", parking)}
+            >
+              <Text style={{ fontWeight: "bold", color: "#f59300" }}>
+                {parking.Name}
+              </Text>
+              {parking.CurrentParkingCost !== undefined && (
+                <Text style={{ fontWeight: "bold", color: "#f59300" }}>
+                  {" Pris: " + parking.CurrentParkingCost + " kr/tim"}
+                </Text>
+              )}
+              {parking.ParkingSpaces !== undefined && (
+                <Text style={styles.textInfo}>
+                  {"Total Antal Platser: " + parking.ParkingSpaces}
+                </Text>
+              )}
+              <Text style={styles.textInfo}>
+                  "clicka för mer info"
+              </Text>
             </MapView.Callout>
           </MapView.Marker>
         );
@@ -109,13 +165,25 @@ function AppMap  ({ navigation })  {
   ) : (
     <ActivityIndicator style={{ flex: 1 }} animating size="large" />
   );
-};
+}
+
+const styles = StyleSheet.create({
+  textInfo: {
+    color: "#aaa",
+    fontWeight: "bold",
+  },
+  callout: {
+    width: "250%",
+    backgroundColor: "#212121",
+    padding: 5,
+    alignItems: "center",
+  },
+  refresh: {
+    backgroundColor: "#212121",
+    width: 40,
+    borderRadius: 5,
+    padding: 2,
+  },
+});
 
 export default AppMap;
-/*
-Promise.all([
-  fetch("http://data.goteborg.se/ParkingService/v2.1/PublicTimeParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=600&format=json"),
-  fetch("http://data.goteborg.se/ParkingService/v2.1/PublicTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=600&format=json"),
-  fetch("http://data.goteborg.se/ParkingService/v2.1/PrivateTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude="+lat+"&longitude="+lon+"&radius=600&format=json")
-  ])
-  */
