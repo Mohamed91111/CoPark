@@ -15,22 +15,14 @@ const InfoApp = () => {
       </View>
       <View style={styles.contentBox}>
         <Text style={styles.textContentBox}>
-          Den här App-en levereras av <Text style={styles.textCodic}>CODIC</Text> EDUCATION och är byggd av <Text style={styles.textCodic}>CODIC</Text>'s studenter som har deltagit i olika kurser som <Text style={styles.textCodic}>CODIC</Text> erbjuder inåm IT-utbildningar.{"\n"}
-          Har du synpunkter, tips eller behöver hjälp kontakta oss.
+          Denna ppplikation levereras av <Text style={styles.textCodic}>CODIC</Text> Education och är utvecklad av LIA(läran i arbete) praktikanter under våren 2021. 
+          Har du några synpunkter, tips eller behöver hjälp kontakta oss.
         </Text>
         <TouchableOpacity onPress={() => Linking.openURL('mailto:hello@codic.se')}>
           <View style={styles.btnNavigation}>
             <Text style={styles.textBtnNavigation}>
               <FontAwesome name="envelope-o" size={30} color="#212121" /> Email:
               hello@codic.se
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => Linking.openURL(`tel:${'0046768990065'}`)}>
-          <View style={styles.btnNavigation}>
-            <Text style={styles.textBtnNavigation}>
-              <FontAwesome name="phone" size={30} color="#212121" />Tel:
-              +46-768-990-065
             </Text>
           </View>
         </TouchableOpacity>
@@ -52,7 +44,7 @@ const styles = StyleSheet.create({
   },
   textContentBox: {
     margin:20,
-    fontSize:15,
+    fontSize:17,
     color: "#aaa",
     letterSpacing:1,
   },
