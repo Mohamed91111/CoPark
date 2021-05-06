@@ -4,10 +4,10 @@ import {
   Text,
   View,
   StyleSheet,
-  TouchableOpacity,
+  Dimensions,
+  Button,
 } from "react-native";
-import MapView, { PROVIDER_DEFAULT } from "react-native-maps";
-import { FontAwesome } from "@expo/vector-icons";
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 
 const initialState = {
   latitude: null,
@@ -65,14 +65,13 @@ function AppMap({ navigation }) {
             .then((data2) => {
               parkings.push(...data2);
 
-              if(parkings.length > 0) {
+              if (parkings.length > 0) {
                 parkings.sort(
                   (a, b) => a.CurrentParkingCost - b.CurrentParkingCost
                 );
-              }else{
+              } else {
                 return;
               }
-              
 
               const sortPrice = parkings[0].CurrentParkingCost;
               let sortDistance = parkings[0].Distance;
@@ -96,71 +95,77 @@ function AppMap({ navigation }) {
   }, [restart]);
 
   return curentPosition.latitude ? (
-    <MapView
-      provider={PROVIDER_DEFAULT}
-      style={{ flex: 1 }}
-      region={curentPosition}
-      showsUserLocation={true}
-      showsScale={true}
-    >
-      <TouchableOpacity
-        style={styles.refresh}
-        onPress={() => setRestart(!restart)}
+    <View style={styles.container}>
+      <MapView
+        provider={PROVIDER_GOOGLE}
+        style={styles.map}
+        region={curentPosition}
+        showsUserLocation={true}
+        showsScale={true}
       >
-        <View>
-          <FontAwesome name="refresh" size={40} color="#f59300" />
-        </View>
-      </TouchableOpacity>
-
-      {loadedParkings.map((parking, index) => {
-        return (
-          <MapView.Marker
-            coordinate={{ latitude: parking.Lat, longitude: parking.Long }}
-            key={parking.Id}
-            pinColor={"purple"} // any color
-          >
-            <View
-              style={{
-                backgroundColor: index == 0 ? "#212121" : "#f59300",
-                padding: index == 0 ? 7 : 5,
-                borderRadius: 5,
-              }}
+        {loadedParkings.map((parking, index) => {
+          return (
+            <MapView.Marker
+              coordinate={{ latitude: parking.Lat, longitude: parking.Long }}
+              key={parking.Id}
+              pinColor={"purple"} // any color
             >
-              <Text
+              <View
                 style={{
-                  color: index == 0 ? "#f59300" : "#212121",
-                  fontWeight: "bold",
-                  fontSize: index == 0 ? 20 : 15,
+                  backgroundColor: index == 0 ? "#212121" : "#f59300",
+                  padding: index == 0 ? 7 : 5,
+                  borderRadius: 5,
                 }}
               >
-                {parking.CurrentParkingCost} kr/tim
-              </Text>
-            </View>
-            <MapView.Callout
-              style={styles.callout}
-              onPress={() => navigation.navigate("ParkingInfo", parking)}
-            >
-              <Text style={{ fontWeight: "bold", color: "#f59300" }}>
-                {parking.Name}
-              </Text>
-              {parking.CurrentParkingCost !== undefined && (
+                <Text
+                  style={{
+                    color: index == 0 ? "#f59300" : "#212121",
+                    fontWeight: "bold",
+                    fontSize: index == 0 ? 20 : 15,
+                  }}
+                >
+                  {parking.CurrentParkingCost} kr/tim
+                </Text>
+              </View>
+              <MapView.Callout
+                style={styles.callout}
+                onPress={() => navigation.navigate("ParkingInfo", parking)}
+              >
                 <Text style={{ fontWeight: "bold", color: "#f59300" }}>
-                  {" Pris: " + parking.CurrentParkingCost + " kr/tim"}
+                  {parking.Name}
                 </Text>
-              )}
-              {parking.ParkingSpaces !== undefined && (
-                <Text style={styles.textInfo}>
-                  {"Total Antal Platser: " + parking.ParkingSpaces}
-                </Text>
-              )}
-              <Text style={styles.textInfo}>
-                  "clicka för mer info"
-              </Text>
-            </MapView.Callout>
-          </MapView.Marker>
-        );
-      })}
-    </MapView>
+                {parking.CurrentParkingCost !== undefined && (
+                  <Text style={{ fontWeight: "bold", color: "#f59300" }}>
+                    {" Pris: " + parking.CurrentParkingCost + " kr/tim"}
+                  </Text>
+                )}
+                {parking.ParkingSpaces !== undefined && (
+                  <Text style={styles.textInfo}>
+                    {"Total Antal Platser: " + parking.ParkingSpaces}
+                  </Text>
+                )}
+                <Text style={styles.textInfo}>"clicka för mer info"</Text>
+              </MapView.Callout>
+            </MapView.Marker>
+          );
+        })}
+      </MapView>
+      <View
+        style={{
+          position: "absolute", //use absolute position to show button on top of the map
+          top: "3%", //for center align
+          alignSelf: "flex-start", //for align to right
+          left: "5%",
+          backgroundColor: "#f59300",
+        }}
+      >
+        <Button
+          onPress={() => setRestart(!restart)}
+          title={"Refresh Map"}
+          color={"#4F4F53"}
+        />
+      </View>
+    </View>
   ) : (
     <ActivityIndicator style={{ flex: 1 }} animating size="large" />
   );
@@ -177,11 +182,15 @@ const styles = StyleSheet.create({
     padding: 5,
     alignItems: "center",
   },
-  refresh: {
-    backgroundColor: "#212121",
-    width: 40,
-    borderRadius: 5,
-    padding: 2,
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  map: {
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
   },
 });
 
