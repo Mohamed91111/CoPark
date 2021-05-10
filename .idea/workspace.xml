@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="44312150-78cc-4043-b2ad-d0b7e0e9cd2a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/MapView.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/MapView.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,10 +38,11 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1913" y="0" width="1546" height="830" key="AVDManager" timestamp="1620321985189">
-      <screen x="1920" y="0" width="1920" height="1040" />
+    <state x="-7" y="81" width="1736" height="856" key="AVDManager" timestamp="1620633071088">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="-7" y="81" width="1736" height="856" key="AVDManager/0.0.1920.1040/1920.0.1920.1040/3840.0.1536.824@0.0.1920.1040" timestamp="1620306870069" />
+    <state x="-7" y="81" width="1736" height="856" key="AVDManager/0.0.1920.1040/1920.-47.1920.1040/3840.0.1920.1040@0.0.1920.1040" timestamp="1620633071088" />
+    <state x="-7" y="81" width="1736" height="856" key="AVDManager/0.0.1920.1040/1920.0.1920.1040/3840.0.1536.824@0.0.1920.1040" timestamp="1620466532827" />
     <state x="1913" y="0" width="1546" height="830" key="AVDManager/0.0.1920.1040/1920.0.1920.1040/3840.0.1536.824@1920.0.1920.1040" timestamp="1620321985189" />
   </component>
 </project>

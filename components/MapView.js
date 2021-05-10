@@ -39,7 +39,7 @@ function AppMap({ navigation }) {
       const lon = position.coords.longitude.toString();
 
       fetch(
-        "http://data.goteborg.se/ParkingService/v2.1/PublicTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude=" +
+        "http://data.goteborg.se/ParkingService/v2.1/PublicTollParkings/7d26816a-74d4-4018-893c-32c3bc44ccda?latitude=" +
           lat +
           "&longitude=" +
           lon +
@@ -53,7 +53,7 @@ function AppMap({ navigation }) {
         })
         .then(() => {
           fetch(
-            "http://data.goteborg.se/ParkingService/v2.1/PrivateTollParkings/799B2AEA-4D41-41A9-86A7-B0F31AE12D11?latitude=" +
+            "http://data.goteborg.se/ParkingService/v2.1/PrivateTollParkings/7d26816a-74d4-4018-893c-32c3bc44ccda?latitude=" +
               lat +
               "&longitude=" +
               lon +
