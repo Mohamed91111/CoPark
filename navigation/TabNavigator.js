@@ -14,7 +14,7 @@ const BottomTabNavigator = () => {
       tabBarIcon: ({ focused, color, size }) => {
         let iconName;
 
-        if (route.name === 'Map') {
+        if (route.name === 'Karta') {
           iconName = focused ? 'map' : 'map-outline';
         } else if (route.name === 'Info'){
           iconName = focused ? 'information-circle' : 'information-circle-outline';
@@ -37,7 +37,7 @@ const BottomTabNavigator = () => {
     
     >
        
-      <Tab.Screen name="Map" component={MainStackNavigator} />
+      <Tab.Screen name="Karta" component={MainStackNavigator} />
       <Tab.Screen name="Info" component={InfoStackNavigator} />
       
     </Tab.Navigator>

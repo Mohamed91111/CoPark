@@ -11,13 +11,12 @@ const InfoApp = () => {
           source={require("../assets/codic-logo.png")}
           style={styles.logoImage}
         />
-        <Text style={styles.textLogo}>Parkings Helper</Text>
       </View>
       <View style={styles.contentBox}>
         <Text style={styles.textContentBox}>
-          Denna Applikation levereras av{" "}
+          CoPark levereras av{" "}
           <Text style={styles.textCodic}>CODIC</Text> Education och är utvecklad
-          av LIA(läran i arbete) praktikanter under våren 2021. Har du några
+          av LIA praktikanter under våren 2021. Har du några
           synpunkter, tips eller behöver hjälp kontakta oss.
         </Text>
         <TouchableOpacity

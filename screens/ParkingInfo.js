@@ -49,7 +49,7 @@ const ParkingInfo = ({ route, navigation }) => {
                         size={20}
                         color="#f7b045"
                       ></Icon>{" "}
-                      <Text style={styles.textTitle}> Pris Just Nu: </Text>
+                      <Text style={styles.textTitle}> Pris just nu: </Text>
                       {CurrentParkingCost} kr/tim
                     </Text>
                   )}
@@ -71,7 +71,7 @@ const ParkingInfo = ({ route, navigation }) => {
                         size={20}
                         color="#f7b045"
                       ></Icon>{" "}
-                      <Text style={styles.textTitle}>Phone Code: </Text>
+                      <Text style={styles.textTitle}>Zon kod: </Text>
                       {PhoneParkingCode}
                     </Text>
                   )}
@@ -79,7 +79,7 @@ const ParkingInfo = ({ route, navigation }) => {
                     <Text style={styles.textInfo}>
                       <Icon name="car-outline" size={20} color="#f7b045"></Icon>{" "}
                       <Text style={styles.textTitle}>
-                        Antal Parking Platser:{" "}
+                        Antal parkerings platser:{" "}
                       </Text>
                       {ParkingSpaces}
                     </Text>
@@ -92,7 +92,7 @@ const ParkingInfo = ({ route, navigation }) => {
                         color="#f7b045"
                       ></Icon>{" "}
                       <Text style={styles.textTitle}>
-                        Parkering Unserhålls Av:{" "}
+                        Parkering underhålls av:{" "}
                       </Text>
                       {Owner}
                     </Text>
@@ -104,7 +104,7 @@ const ParkingInfo = ({ route, navigation }) => {
                         size={20}
                         color="#f7b045"
                       ></Icon>{" "}
-                      <Text style={styles.textTitle}>Pris Plain: </Text>
+                      <Text style={styles.textTitle}>Pris: </Text>
                       {ParkingCost}
                     </Text>
                   )}
@@ -126,7 +126,7 @@ const ParkingInfo = ({ route, navigation }) => {
                         size={20}
                         color="#f7b045"
                       ></Icon>{" "}
-                      <Text style={styles.textTitle}>Extra Info: </Text>
+                      <Text style={styles.textTitle}>Extra info: </Text>
                       {ExtraInfo}
                     </Text>
                   )}
@@ -139,7 +139,7 @@ const ParkingInfo = ({ route, navigation }) => {
       <View style={styles.navigation}>
         <TouchableOpacity onPress={navigationTo}>
           <View style={styles.btnNavigation}>
-            <Text style={styles.textBtnNavigation}>Navigation</Text>
+            <Text style={styles.textBtnNavigation}>Navigera</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -191,10 +191,10 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     shadowColor: "black",
     paddingVertical: "5%",
-    paddingHorizontal: "30%",
     marginVertical: 15,
     marginLeft: 20,
     marginRight: 20,
+    alignItems: "center",
   },
   scrollView: {
     width: "100%",

@@ -19,7 +19,10 @@
     "ios": {
       "bundleIdentifier": "se.codic.copark",
       "buildNumber": "1.0.0",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "config": {
+        "googleMapsApiKey": "AIzaSyB1kTbNe03tEugQ_Ixh1XMHs94mJve3rmY"
+      }
     },
     "android": {
       "package": "se.codic.copark",

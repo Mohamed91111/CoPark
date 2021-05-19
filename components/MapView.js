@@ -43,7 +43,7 @@ function AppMap({ navigation }) {
           lat +
           "&longitude=" +
           lon +
-          "&radius=600&format=json"
+          "&radius=11600&format=json"
       )
         .then((response) => {
           return response.json();
@@ -57,7 +57,7 @@ function AppMap({ navigation }) {
               lat +
               "&longitude=" +
               lon +
-              "&radius=600&format=json"
+              "&radius=11600&format=json"
           )
             .then((response) => {
               return response.json();
@@ -129,7 +129,7 @@ function AppMap({ navigation }) {
               </View>
               <MapView.Callout
                 style={styles.callout}
-                onPress={() => navigation.navigate("ParkingInfo", parking)}
+                onPress={() => navigation.navigate("Parkering", parking)}
               >
                 <Text style={{ fontWeight: "bold", color: "#f59300" }}>
                   {parking.Name}
@@ -141,7 +141,7 @@ function AppMap({ navigation }) {
                 )}
                 {parking.ParkingSpaces !== undefined && (
                   <Text style={styles.textInfo}>
-                    {"Total Antal Platser: " + parking.ParkingSpaces}
+                    {"Total antal platser: " + parking.ParkingSpaces}
                   </Text>
                 )}
                 <Text style={styles.textInfo}>"clicka för mer info"</Text>
@@ -161,7 +161,7 @@ function AppMap({ navigation }) {
       >
         <Button
           onPress={() => setRestart(!restart)}
-          title={"Refresh Map"}
+          title={"UPPDATERA"}
           color={"#4F4F53"}
         />
       </View>
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   callout: {
-    width: "250%",
+    width: "300%",
     backgroundColor: "#212121",
     padding: 5,
     alignItems: "center",

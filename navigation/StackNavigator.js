@@ -12,7 +12,7 @@ const screenOptionStyle = {
     backgroundColor: "#f7b045",
   },
   headerTintColor: "#212121",
-  headerBackTitle: "Back",
+  headerBackTitle: "Tillbaka",
 };
 const SettingStackNavigator = () => {
   return (
@@ -25,8 +25,8 @@ const SettingStackNavigator = () => {
 const MainStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
-      <Stack.Screen name="HomeMap" component={AppMap} />
-      <Stack.Screen name="ParkingInfo" component={ParkingInfo} />
+      <Stack.Screen name="Karta" component={AppMap} />
+      <Stack.Screen name="Parkering" component={ParkingInfo} />
     </Stack.Navigator>
   );
 };
@@ -36,7 +36,7 @@ const MainStackNavigator = () => {
 const InfoStackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={screenOptionStyle}>
-      <Stack.Screen name="InfoApp" component={InfoApp} />
+      <Stack.Screen name="Info" component={InfoApp} />
     </Stack.Navigator>
   );
 };
